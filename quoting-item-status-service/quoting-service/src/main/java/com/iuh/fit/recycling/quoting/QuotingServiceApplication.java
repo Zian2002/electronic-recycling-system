@@ -72,6 +72,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                     .price(productPrices.get(index))
                     .series(productSeries.get(index))
                     .imageUrl(imageUrls.get(index))
+                    .active(true)
                     .build();
             initialProducts.add(product);
         }
@@ -87,6 +88,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .name("Damaged or Broken")
                 .percentDecrease(40)
                 .type(ConditionType.OVERALL)
+                .active(true)
                 .build();
         initialCondition.add(damagedCondition);
 
@@ -94,6 +96,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(2L)
                 .name("Scratched or Scuffed")
                 .percentDecrease(25)
+                .active(true)
                 .type(ConditionType.OVERALL)
                 .build();
         initialCondition.add(scratchedCondition);
@@ -102,6 +105,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(3L)
                 .name("Lightly Used")
                 .percentDecrease(15)
+                .active(true)
                 .type(ConditionType.OVERALL)
                 .build();
         initialCondition.add(lightCondition);
@@ -110,6 +114,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(4L)
                 .name("Flawless or Like New")
                 .percentDecrease(0)
+                .active(true)
                 .type(ConditionType.OVERALL)
                 .build();
         initialCondition.add(flawlessCondition);
@@ -118,6 +123,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(5L)
                 .name("Screen works and fully lights up")
                 .percentDecrease(0)
+                .active(true)
                 .type(ConditionType.SCREEN)
                 .build();
         initialCondition.add(fullyLightCondition);
@@ -126,6 +132,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(6L)
                 .name("Screen has flaws, flicker or is dim")
                 .percentDecrease(20)
+                .active(true)
                 .type(ConditionType.SCREEN)
                 .build();
         initialCondition.add(dimCondition);
@@ -134,6 +141,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(7L)
                 .name("Face ID not working")
                 .percentDecrease(15)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(faceIdCondition);
@@ -142,6 +150,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(8L)
                 .name("Battery can not hold a charge")
                 .percentDecrease(5)
+                .active(true)
                 .type(ConditionType.BATTERY)
                 .build();
         initialCondition.add(chargeCondition);
@@ -150,6 +159,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(9L)
                 .name("Battery greater than equal 85%")
                 .percentDecrease(0)
+                .active(true)
                 .type(ConditionType.BATTERY)
                 .build();
         initialCondition.add(battery1);
@@ -158,6 +168,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(10L)
                 .name("Battery 75-85%")
                 .percentDecrease(5)
+                .active(true)
                 .type(ConditionType.BATTERY)
                 .build();
         initialCondition.add(battery2);
@@ -166,6 +177,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(11L)
                 .name("Battery less than 75%")
                 .percentDecrease(7)
+                .active(true)
                 .type(ConditionType.BATTERY)
                 .build();
         initialCondition.add(battery3);
@@ -174,6 +186,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(12L)
                 .name("Peripheral buttons not working")
                 .percentDecrease(5)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(buttonCondition);
@@ -182,6 +195,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(13L)
                 .name("Front camera not good working")
                 .percentDecrease(8)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(frontCamera);
@@ -190,6 +204,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(14L)
                 .name("Back camera not good working")
                 .percentDecrease(8)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(backCamera);
@@ -198,6 +213,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(15L)
                 .name("Speaker and microphone not good working")
                 .percentDecrease(4)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(ioSoundCondition);
@@ -206,6 +222,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(16L)
                 .name("Mobile network, Wi-Fi, Bluetooth, and GPS connectivity not working")
                 .percentDecrease(6)
+                .active(true)
                 .type(ConditionType.FUNCTIONAL)
                 .build();
         initialCondition.add(netCondition);
@@ -214,6 +231,7 @@ public class QuotingServiceApplication implements CommandLineRunner {
                 .conditionId(17L)
                 .name("Unopened retail packaging (factory sealed)")
                 .percentDecrease(10)
+                .active(true)
                 .type(ConditionType.SEALED)
                 .build();
         initialCondition.add(newCondition);

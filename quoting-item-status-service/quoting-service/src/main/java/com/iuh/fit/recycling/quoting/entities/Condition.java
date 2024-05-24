@@ -19,6 +19,8 @@ public class Condition {
     private String name;
     private Integer percentDecrease;
     private String note;
+    @JsonIgnore
+    private Boolean active;
 
     @JsonIgnore
     public boolean isValidInformation(){

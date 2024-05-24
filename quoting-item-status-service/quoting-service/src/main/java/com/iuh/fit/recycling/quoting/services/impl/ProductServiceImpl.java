@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return productRepository.findAllByActiveIsTrue();
     }
 
     @Override
@@ -34,9 +34,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findBySeries(String series) {
         if (series == null)
-            return productRepository.findAll();
+            return productRepository.findAllByActiveIsTrue();
         else
-            return productRepository.findAllBySeries(series);
+            return productRepository.findAllBySeriesAndActiveIsTrue(series);
     }
 
     @Override
@@ -65,12 +65,19 @@ public class ProductServiceImpl implements ProductService {
             throw new BadRequestException("product information is required");
         }
 
+        Product existedProduct = findById(product.getProductId());
+        product.setNote(product.getNote() != null ? product.getNote() : existedProduct.getNote());
+        product.setName(product.getName() != null ? product.getName() : existedProduct.getName());
+        product.setPrice(product.getPrice() != null ? product.getPrice() : existedProduct.getPrice());
+        product.setSeries(product.getSeries() != null ? product.getSeries() : existedProduct.getSeries());
+
         return productRepository.save(product);
     }
 
     @Override
     public void delete(Long productId) {
         Product product = findById(productId);
-        productRepository.delete(product);
+        product.setActive(false);
+        productRepository.save(product);
     }
 }

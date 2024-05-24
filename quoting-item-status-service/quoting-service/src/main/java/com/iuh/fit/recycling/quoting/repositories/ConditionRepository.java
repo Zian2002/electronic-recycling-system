@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ConditionRepository extends JpaRepository<Condition, Long> {
 
-    List<Condition> findAllByType(ConditionType type);
+    List<Condition> findAllByTypeAndActiveIsTrue(ConditionType type);
 
+    List<Condition> findAllByActiveIsTrue();
 }

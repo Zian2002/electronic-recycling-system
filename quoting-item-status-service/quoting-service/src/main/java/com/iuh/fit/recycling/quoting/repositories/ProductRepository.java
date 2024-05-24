@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findAllBySeries(String series);
+    List<Product> findAllBySeriesAndActiveIsTrue(String series);
+
+    List<Product> findAllByActiveIsTrue();
 
 }

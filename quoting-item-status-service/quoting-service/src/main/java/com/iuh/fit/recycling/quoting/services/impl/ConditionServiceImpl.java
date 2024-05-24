@@ -20,7 +20,7 @@ public class ConditionServiceImpl implements ConditionService {
     @Override
     public List<Condition> findAll() {
 
-        return conditionRepository.findAll();
+        return conditionRepository.findAllByActiveIsTrue();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ConditionServiceImpl implements ConditionService {
         if (type == null)
             throw new BadRequestException("conditionType is required");
 
-        return conditionRepository.findAllByType(type);
+        return conditionRepository.findAllByTypeAndActiveIsTrue(type);
     }
 
     @Override
@@ -51,6 +51,7 @@ public class ConditionServiceImpl implements ConditionService {
             throw new BadRequestException("Condition information is required");
 
         condition.setConditionId(null);
+        condition.setActive(true);
         return conditionRepository.save(condition);
     }
 
@@ -62,12 +63,18 @@ public class ConditionServiceImpl implements ConditionService {
         if (!condition.isValidInformation() || condition.getConditionId() == null)
             throw new BadRequestException("Condition information is required");
 
-        return conditionRepository.save(condition);
+        Condition existedCondition = findById(condition.getConditionId());
+        existedCondition.setName(condition.getName() != null ? condition.getName() : existedCondition.getName());
+        existedCondition.setType(condition.getType() != null ? condition.getType() : existedCondition.getType());
+        existedCondition.setNote(condition.getNote() != null ? condition.getNote() : existedCondition.getNote());
+
+        return conditionRepository.save(existedCondition);
     }
 
     @Override
     public void delete(Long conditionId) {
         Condition condition = findById(conditionId);
-        conditionRepository.delete(condition);
+        condition.setActive(false);
+        conditionRepository.save(condition);
     }
 }

@@ -23,6 +23,8 @@ public class Product {
     private String imageUrl;
     private Double price;
     private String note;
+    @JsonIgnore
+    private Boolean active;
 
     @JsonIgnore
     public boolean isValidInformation(){
