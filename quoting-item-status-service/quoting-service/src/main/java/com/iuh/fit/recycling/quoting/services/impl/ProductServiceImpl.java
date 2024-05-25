@@ -51,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         product.setProductId(null);
+        product.setActive(true);
 
         return productRepository.save(product);
     }
