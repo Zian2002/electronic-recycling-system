@@ -66,12 +66,12 @@ public class ProductServiceImpl implements ProductService {
         }
 
         Product existedProduct = findById(product.getProductId());
-        product.setNote(product.getNote() != null ? product.getNote() : existedProduct.getNote());
-        product.setName(product.getName() != null ? product.getName() : existedProduct.getName());
-        product.setPrice(product.getPrice() != null ? product.getPrice() : existedProduct.getPrice());
-        product.setSeries(product.getSeries() != null ? product.getSeries() : existedProduct.getSeries());
+        existedProduct.setNote(product.getNote() != null ? product.getNote() : existedProduct.getNote());
+        existedProduct.setName(product.getName() != null ? product.getName() : existedProduct.getName());
+        existedProduct.setPrice(product.getPrice() != null ? product.getPrice() : existedProduct.getPrice());
+        existedProduct.setSeries(product.getSeries() != null ? product.getSeries() : existedProduct.getSeries());
 
-        return productRepository.save(product);
+        return productRepository.save(existedProduct);
     }
 
     @Override
