@@ -32,18 +32,30 @@ public class QuotingItemServiceImpl implements QuotingItemService {
     private final int minDecreasedValue = 10;
 
     private Set<Condition> getConditionsByIds(List<Long> conditionIds){
-        Set<Condition> conditions = new HashSet<Condition>();
+        Set<Condition> conditions = new HashSet<>();
         boolean containBattery = false;
-        for (Long conditionId : conditionIds){
+        boolean containOverall = false;
+        boolean containScreen = false;
+
+        for (Long conditionId : conditionIds) {
             Condition condition = conditionService.findById(conditionId);
             if (condition.getType().equals(ConditionType.BATTERY) && containBattery)
                 continue;
 
             if (condition.getType().equals(ConditionType.BATTERY))
                 containBattery = true;
+            if (condition.getType().equals(ConditionType.OVERALL))
+                containOverall = true;
+            if (condition.getType().equals(ConditionType.SCREEN))
+                containScreen = true;
 
             conditions.add(condition);
         }
+
+        if (!containBattery || !containOverall || !containScreen) {
+            throw new IllegalArgumentException("Must include conditions of type OVERALL, SCREEN, and BATTERY");
+        }
+
         return conditions;
     }
 
@@ -54,24 +66,28 @@ public class QuotingItemServiceImpl implements QuotingItemService {
 
     private int getTotalDecrease(Set<Condition> conditions){
         int totalDecrease = 0;
-        for (Condition condition : conditions){
+        int baseDecrease = 0;
+
+        for (Condition condition : conditions) {
             if (condition.getType().equals(ConditionType.SEALED))
                 return condition.getPercentDecrease();
-            totalDecrease += condition.getPercentDecrease();
-        }
-        if (totalDecrease == 0){
-            return minDecreasedValue;
+
+            if (condition.getType().equals(ConditionType.OVERALL) ||
+                    condition.getType().equals(ConditionType.SCREEN) ||
+                    condition.getType().equals(ConditionType.BATTERY)) {
+                baseDecrease += condition.getPercentDecrease();
+            } else {
+                totalDecrease += condition.getPercentDecrease();
+            }
         }
 
-        return Math.min(Math.max(totalDecrease, minDecreasedValue), maxDecreasedValue);
-    }
-
-    private boolean isSealed(Set<Condition> conditions){
-        for (Condition condition : conditions){
-            if (condition.getType().equals(ConditionType.SEALED))
-                return true;
+        if (baseDecrease < minDecreasedValue) {
+            baseDecrease = minDecreasedValue;
         }
-        return false;
+
+        totalDecrease += baseDecrease;
+
+        return Math.min(totalDecrease, maxDecreasedValue);
     }
 
 
@@ -121,7 +137,6 @@ public class QuotingItemServiceImpl implements QuotingItemService {
 
 
         return quotingItem;
-//        return null;
     }
 
     @Override
