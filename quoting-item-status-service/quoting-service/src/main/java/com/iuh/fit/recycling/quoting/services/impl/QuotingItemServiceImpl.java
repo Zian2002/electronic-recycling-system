@@ -42,6 +42,10 @@ public class QuotingItemServiceImpl implements QuotingItemService {
             if (condition.getType().equals(ConditionType.BATTERY) && containBattery)
                 continue;
 
+            if (condition.getType().equals(ConditionType.SEALED)) {
+                return Set.of(condition);
+            }
+
             if (condition.getType().equals(ConditionType.BATTERY))
                 containBattery = true;
             if (condition.getType().equals(ConditionType.OVERALL))
@@ -53,7 +57,7 @@ public class QuotingItemServiceImpl implements QuotingItemService {
         }
 
         if (!containBattery || !containOverall || !containScreen) {
-            throw new IllegalArgumentException("Must include conditions of type OVERALL, SCREEN, and BATTERY");
+            throw new BadRequestException("Must include conditions of type OVERALL, SCREEN, and BATTERY");
         }
 
         return conditions;
